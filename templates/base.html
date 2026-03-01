@@ -12,37 +12,23 @@
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
     <link rel="stylesheet" href="{% static 'css/sweetalert2.css' %}">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/toastr.min.js' %}"></script>
 </head>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    var toastElList = [].slice.call(document.querySelectorAll('.toast'));
-    toastElList.map(function (toastEl) {
-        new bootstrap.Toast(toastEl, {
-            delay: 30000
-        }).show();
-    });
-});
-</script>
 <body class="">
     {% block content %}{% endblock %}
     <div class="toast-container position-fixed top-0 end-0 p-3">
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="toast align-items-center text-white bg-{{ message.tags }} bg-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} border-0 mb-2"
-                 role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        {{ message }}
-                    </div>
-                    <button type="button"
-                            class="btn-close btn-close-white me-2 m-auto"
-                            data-bs-dismiss="toast">
-                    </button>
-                </div>
-            </div>
-        {% endfor %}
-    {% endif %}
+        {% if messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                {% for message in messages %}
+                    toastr["{{ message.tags }}"]("{{ message|escapejs }}");
+                {% endfor %}
+            });
+        </script>
+        {% endif %}
+    </div>
 </div>
     <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
     <!-- endinject -->

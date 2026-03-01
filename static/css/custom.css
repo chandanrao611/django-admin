@@ -212,3 +212,25 @@ ul.errorlist {
     border: 2px solid red;
     border-bottom: 2px solid red !important;
 }
+.profile-td {
+    display: flex;
+    vertical: middle;
+    text-decoration: none;
+}
+.td-profile-text {
+   margin: 5px 0 0 5px;
+}
+input[type=file]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: grey;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover {
+  background: #3096e6;
+}

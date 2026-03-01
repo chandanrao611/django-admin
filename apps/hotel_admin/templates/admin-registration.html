@@ -1,0 +1,93 @@
+{% include 'base.html' %}
+<div class="container-scroller">
+    {% include 'header.html' %}
+    <div class="container-fluid page-body-wrapper">
+        {% include 'sidebar.html' %}
+        {% block content %}
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h3 class="page-title">
+                        <span class="page-title-icon bg-gradient-primary text-white me-2">
+                            <i class="mdi mdi-account-multiple"></i>
+                        </span> Add Employee
+                    </h3>
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <span></span>Overview <i
+                                    class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" class="form-inline">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.username.label_tag}}
+                                    {{form.username}}
+                                    {{form.username.errors}}
+                                </div>
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.first_name.label_tag}}
+                                    {{form.first_name}}
+                                    {{form.first_name.errors}}
+                                </div>
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.last_name.label_tag}}
+                                    {{form.last_name}}
+                                    {{form.last_name.errors}}
+                                </div>
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.email.label_tag}}
+                                    {{form.email}}
+                                    {{form.email.errors}}
+                                </div>
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.mobile.label_tag}}
+                                    {{form.mobile}}
+                                    {{form.mobile.errors}}
+                                </div>
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.dob.label_tag}}
+                                    {{form.dob}}
+                                    {{form.dob.errors}}
+                                </div>
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.gender.label_tag}}
+                                    {{form.gender}}
+                                    {{form.gender.errors}}
+                                </div>
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.city.label_tag}}
+                                    {{form.city}}
+                                    {{form.city.errors}}
+                                </div>
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.district.label_tag}}
+                                    {{form.district}}
+                                    {{form.district.errors}}
+                                </div>
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.state.label_tag}}
+                                    {{form.state}}
+                                    {{form.state.errors}}
+                                </div>
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.pincode.label_tag}}
+                                    {{form.pincode}}
+                                    {{form.pincode.errors}}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</div>

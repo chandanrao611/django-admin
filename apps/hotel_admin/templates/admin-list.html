@@ -1,0 +1,119 @@
+{% include 'base.html' %}
+{% load static %}
+<div class="container-scroller">
+    {% include 'header.html' %}
+    <div class="container-fluid page-body-wrapper">
+        {% include 'sidebar.html' %}
+        {% block content %}
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h3 class="page-title">
+                        <span class="page-title-icon bg-gradient-primary text-white me-2">
+                            <i class="mdi mdi-account-multiple"></i>
+                        </span> Admin User List
+                    </h3>
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <span></span>Overview <i
+                                    class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-12 grid-margin-sm">
+                    <div class="card card-statistics">
+                        <div class="row">
+                            <div class="card-col col-xl-3 col-lg-3 col-md-3 col-12 border-right">
+                                <div class="card-body card-body-pd">
+                                    <div
+                                        class="d-flex align-items-center justify-content-center flex-column flex-sm-row">
+                                        <i class="mdi mdi-account-multiple text-primary me-0 me-sm-4 icon-lg"></i>
+                                        <div class="wrapper text-center text-sm-left">
+                                            <p class="card-text mb-0">Total Admin Users</p>
+                                            <div class="fluid-container">
+                                                <h3 class="mb-0 font-weight-medium">{{page_obj.paginator.count}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-col col-xl-6 col-lg-6 col-md-6 col-12 border-right">
+                                <div class="card-body card-body-pd d-flex">
+                                    <div class="ml-2 d-flex">
+                                        <form method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="file" name="csv_file">
+                                            <button type="submit" class="btn btn-info btn-fw">Upload</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-col col-xl-3 col-lg-3 col-md-3 col-12 border-right">
+                                <div class="card-body card-body-pd d-flex">
+                                    <a href="{% url 'hotel_admin:admin-add' %}" class="btn btn-inverse-info btn-fw"> <i class="mdi mdi-account-plus"></i> Add New Admin</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body card-body-pd">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No.</th>
+                                        <th>User</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Address</th>
+                                        <th>Status</th>
+                                        <th>Created At</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for data in page_obj %}
+                                    <tr>
+                                        <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+                                        <td>
+                                            <a href="{% url 'hotel_admin:admin-profile' data.id %}" class="profile-td">
+                                                <div class="nav-profile-image">
+                                                  <img src="{% static 'images/faces/face1.jpg' %}" alt="profile">
+                                                  <span class="login-status online"></span>
+                                                </div>
+                                                <div class="td-profile-text d-flex flex-column">
+                                                  <span class="font-weight-bold mb-1">{{data.first_name}} {{data.last_name}}</span>
+                                                  <span class="text-secondary text-small">{{data.username}}</span>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>{{data.email}}</td>
+                                        <td>{{data.mobile}}</td>
+                                        <td>{{data.district}} {{data.state}}</td>
+                                        <td>
+                                            <label class="badge badge-gradient-success">{{data.status}}</label>
+                                        </td>
+                                        <td>{{data.created_at|date:"d M Y"}}</td>
+                                        <td></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                {% if page_obj.paginator.count > 10 %}
+                                <tfoot class="no-border">
+                                    <tr>
+                                        <td colspan="7" class="no-border">{% include 'pagination.html' %}</td>
+                                    </tr>
+                                </tfoot>
+                                {% endif %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</div>

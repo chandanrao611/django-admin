@@ -1,4 +1,5 @@
 from django import forms
+from apps.hotel_admin.models import AdminUser
 
 def common_attrs(name, placeholder, className=None, maxLength=None):
     attrs = {
@@ -11,11 +12,12 @@ def common_attrs(name, placeholder, className=None, maxLength=None):
         'placeholder': placeholder,
         'maxlength': maxLength if maxLength else '100'
     }
-class EmployeeForm(forms.Form) :
+class AdminUserForm(forms.Form) :
     def __init__(self, *args, **kwargs):
-        self.employee_id = kwargs.pop('employee_id', None)  # 👈 ALWAYS SET
+        self.id = kwargs.pop('id', None)  # 👈 ALWAYS SET
         super().__init__(*args, **kwargs)
 
+    username = forms.CharField(label='User Name', max_length=50, widget=forms.TextInput(attrs=common_attrs('username','Enter your username')))
     first_name = forms.CharField(label='First Name', max_length=50, widget=forms.TextInput(attrs=common_attrs('first_name','Enter your first name')))
     last_name = forms.CharField(label='Last Name', max_length=50, required=False,widget=forms.TextInput(attrs=common_attrs('last_name','Enter your last name')))
     email = forms.EmailField(label='Email', max_length=20, widget=forms.TextInput(attrs=common_attrs('email','Enter your email')))
@@ -47,14 +49,25 @@ class EmployeeForm(forms.Form) :
 
     def clean_email(self):
         email = self.cleaned_data['email']
-        # qs = Employee.objects.filter(email=email)
+        qs = AdminUser.objects.filter(email=email)
         # # ✅ Ignore same record during edit
-        # if self.employee_id is not None:
-        #     qs = qs.exclude(id=self.employee_id)
-        # if qs.exists():
-        #     raise forms.ValidationError("This email is already registered")
+        if self.id is not None:
+            qs = qs.exclude(id=self.id)
+        if qs.exists():
+            raise forms.ValidationError("This email is already registered")
 
         return email
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        qs = AdminUser.objects.filter(username=username)
+        # # ✅ Ignore same record during edit
+        if self.id is not None:
+            qs = qs.exclude(id=self.id)
+        if qs.exists():
+            raise forms.ValidationError("This username is already registered")
+
+        return username
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Username', widget=forms.TextInput(attrs=common_attrs('username','Enter your username', 'form-control-lg', '20')))
@@ -103,3 +116,6 @@ class OtpForm(forms.Form):
         if not first.strip() or not second.strip() or not third.strip() or not four.strip() or not five.strip() or not six.strip():
             self.add_error('first', 'Please enter valid OTP code')
         return cleaned_data
+
+class FileForm(forms.Form):
+    csv_file = forms.FileField()
