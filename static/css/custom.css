@@ -1,0 +1,214 @@
+body {
+    font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif !important;
+}
+
+#sidebar {
+    position: fixed;
+    z-index: 999;
+}
+
+.nav-box {
+    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}
+
+.content-wrapper {
+    background: #e9ecef;
+    padding: 1.75rem 1.25rem;
+    width: 100%;
+    flex-grow: 1;
+}
+
+ul.nav.left-sidebar-dbmci {
+    height: 90vh;
+    overflow-y: scroll !important;
+}
+
+.container-fluid .main-panel {
+    right: 0px;
+    position: absolute;
+}
+
+a.working_spiner {
+    font-size: 18px;
+    padding: 0 5px 0 0;
+}
+
+.overlay-area .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.75);
+    text-align: center;
+    vertical-align: middle;
+}
+
+.overlay-area {
+    position: relative;
+}
+
+.overlay-area .overlay i {
+    position: absolute;
+    top: calc(50% - 15px);
+    font-size: 30px;
+}
+
+.bottom-box {
+    box-shadow: 0px 2px 5px 3px rgb(0 0 0 / 20%);
+    -webkit-box-shadow: 0px 2px 5px 3px rgb(0 0 0 / 20%);
+    -moz-box-shadow: 0px 2px 5px 3px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 50%), 0px 1px 3px 0px rgb(0 0 0 / 50%); */
+}
+
+.card-body-pd {
+    padding: 1.2rem !important;
+}
+
+.card.mt-card .card-body {
+    padding: 0;
+}
+
+.table-sm.mat-table th {
+    padding: .8rem 0.3rem !important;
+    color: rgba(0, 0, 0, .54);
+}
+
+.grid-margin-sm {
+    margin-bottom: 0.8rem;
+}
+
+.width-max-content {
+    width: max-content;
+}
+
+.input-group-prepend-dbmci span.input-group-text {
+    padding: 0;
+    background: unset;
+    border: unset;
+    border-bottom: 1px solid #15317a;
+    color: #0b3ec1;
+}
+
+img.header-image-login {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+}
+
+.validity-content {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr 1fr;
+    grid-template-rows: minmax(30px, auto);
+    grid-gap: 5px;
+    padding: 5px 0 0 0;
+}
+
+.form-control {
+    width: 100%;
+    height: 1.875rem;
+    padding: 0.94rem 1.375rem;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1;
+    font: inherit;
+    background: transparent;
+    color: currentColor;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    vertical-align: bottom;
+    text-align: inherit;
+    box-sizing: content-box;
+    border-bottom: 1px solid #2688e8 !important;
+}
+
+.form-group label {
+    font-weight: 600;
+}
+
+select.form-control {
+    outline: none;
+    padding: 0px;
+    color: #000000c7;
+    font-size: 15px;
+}
+
+*:focus {
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.page-header {
+    margin: 0 0 0.5rem 0;
+}
+ul.errorlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: red;
+  font-style: italic;
+}
+.no-border {
+    border: none !important;
+}
+.pagination-input input.form-control-pagination {
+    width: 50px;
+    padding: 5px;
+    border-radius: 0.2rem;
+    font-size: 0.875rem;
+}
+.pagination button.btn-md {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: xx-large;
+    color: #0d6efd;
+}
+.pagination button.btn-sm {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: x-large;
+    color: #0d6efd;
+}
+.pagination button.btn-sm.disabled,
+.pagination button.btn-sm.disabled:hover,
+.pagination button.btn-md.disabled,
+.pagination button.btn-md.disabled:hover {
+    color: grey;
+    cursor: not-allowed;
+}
+.not-found {
+    text-align: center;
+    font-size: 18px;
+    text-align: center;
+    color: red;
+    font-style: italic;
+}
+/* ----------OTP----------- */
+.otp-input-box .form-control {
+    width: 40px;
+    height: 40px;
+     -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+    text-align: center;
+    margin: 0 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #ccc !important;
+}
+.otp-input-box .form-control:focus {
+    box-shadow: none;
+    border: 2px solid red;
+    border-bottom: 2px solid red !important;
+}

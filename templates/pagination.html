@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <div class="row align-items-center">
+    <!-- Left: Total Count -->
+    <div class="col-md-4 col-12 text-md-start text-center mb-2 mb-md-0">
+      <label>Total Results: {{ page_obj.paginator.count }}</label>
+    </div>
+    <!-- Center: Pagination -->
+    <div class="col-md-4 col-12 d-inline-flex align-items-center">
+      <div class="btn-group pagination" role="group">
+        <button class="btn-md {% if not page_obj.has_previous %}disabled{% endif %}" onclick="onPageChange(event, 'first')"><i class="mdi mdi-page-first"></i></button>
+        <button class="btn-sm {% if not page_obj.has_previous %}disabled{% endif %}" onclick="onPageChange(event, 'prev')"><i class="mdi mdi-chevron-left"></i></button>
+      </div>
+      <div class="pagination-input d-inline-flex align-items-center">
+        <input type="text" class="form-control-pagination text-center mx-2" onblur="changePagination(event)" value="{{ page_obj.number }}" />
+        of&nbsp;<span class="pagination-input-counter">{{ page_obj.paginator.num_pages }}</span>
+      </div>
+      <div class="btn-group pagination" role="group">
+        <button class="btn-sm {% if not page_obj.has_next %}disabled{% endif %}" onclick="onPageChange(event, 'next')"><i class="mdi mdi-chevron-right"></i></button>
+        <button class="btn-md {% if not page_obj.has_next %}disabled{% endif %}" onclick="onPageChange(event, 'last')"><i class="mdi mdi-page-last"></i></button>
+      </div>
+    </div>
+    <!-- Right: Page Size -->
+    <div class="col-md-4 col-12 text-md-end text-center">
+      <form method="get" class="d-inline-flex align-items-center">
+        <label class="me-2 fw-semibold">Show per page:</label>
+        <select name="limit" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
+          <option value="10" {% if request.GET.limit == "10" %}selected{% endif %}>10</option>
+          <option value="25" {% if request.GET.limit == "25" %}selected{% endif %}>25</option>
+          <option value="50" {% if request.GET.limit == "50" %}selected{% endif %}>50</option>
+          <option value="100" {% if request.GET.limit == "100" %}selected{% endif %}>100</option>
+        </select>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  function changePagination(event) {
+    const input = event.target;
+    let page = parseInt(input.value);
+    const totalPages = parseInt(document.querySelector('.pagination-input-counter').innerText);
+    console.log('Total Pages:', totalPages, 'Input Page:', page);
+    if (isNaN(page) || page < 1) {
+      page = 1;
+    } else if (page > totalPages) {
+      page = totalPages;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('page', page);
+    window.location.search = urlParams.toString();
+  }
+  function onPageChange(event, action) {
+    event.preventDefault();
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentPage = parseInt(urlParams.get('page')) || 1;
+    const totalPages = parseInt(document.querySelector('.pagination-input-counter').innerText);
+
+    if (action === 'first') {
+      currentPage = 1;
+    } else if (action === 'prev' && currentPage > 1) {
+      currentPage -= 1;
+    } else if (action === 'next' && currentPage < totalPages) {
+      currentPage += 1;
+    } else if (action === 'last') {
+      currentPage = totalPages;
+    }
+    urlParams.set('page', currentPage);
+    window.location.search = urlParams.toString();
+  }
+</script>
