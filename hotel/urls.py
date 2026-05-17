@@ -19,4 +19,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include('apps.hotel_admin.urls')),
+    path('hotel', include('apps.hotels.urls')),
+    path('customer', include('apps.customers.urls')),
+    path('bookings', include('apps.bookings.urls')),
+    path('payments', include('apps.payments.urls')),
+    path('rooms', include('apps.rooms.urls')),
+    path('review', include('apps.reviews.urls'))
 ]

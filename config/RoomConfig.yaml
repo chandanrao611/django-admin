@@ -1,0 +1,37 @@
+room_types:
+    - room_type: "single"
+      description: "One single bed"
+      min_capacity: 1
+      max_capacity: 1
+    - room_type: "double"
+      description: "One double bed"
+      min_capacity: 2
+      max_capacity: 2
+    - room_type: "twin"
+      description: "Two single beds"
+      min_capacity: 2
+      max_capacity: 2
+    - room_type: "triple"
+      description: "Three beds"
+      min_capacity: 3
+      max_capacity: 3
+    - room_type: "deluxe"
+      description: "Larger room with better amenities"
+      min_capacity: 2
+      max_capacity: 3
+    - room_type: "suite"
+      description: "Separate bedroom and living room"
+      min_capacity: 2
+      max_capacity: 4
+    - room_type: "executive"
+      description: "Premium business room"
+      min_capacity: 2
+      max_capacity: 2
+    - room_type: "family_room"
+      description: "Designed for families"
+      min_capacity: 4
+      max_capacity: 6
+    - room_type: "studio"
+      description: "Room with kitchen area"
+      min_capacity: 2
+      max_capacity: 3

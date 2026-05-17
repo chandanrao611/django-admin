@@ -38,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.hotel_admin',
+    'apps.bookings',
+    'apps.customers',
+    'apps.hotels',
+    'apps.payments',
+    'apps.reviews',
+    'apps.rooms'
 ]
 
 MIDDLEWARE = [
@@ -47,7 +53,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.LoaderMiddleware.LoaderMiddleware'
 ]
 
 ROOT_URLCONF = 'hotel.urls'
@@ -62,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'utils.context_processors.global_loader',
             ],
         },
     },
@@ -135,6 +143,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'crao.wonderpillars@gmail.com'
-EMAIL_HOST_PASSWORD = 'htvr cqze qqul grbn'  # Use App Password
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''  # Use App Password
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

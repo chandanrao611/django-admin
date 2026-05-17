@@ -1,0 +1,22 @@
+# 🔐 Environment
+.env
+
+# 🐍 Python cache
+__pycache__/
+*.pyc
+
+# 📦 Virtual environment
+venv/
+env/
+
+# 🧠 IDE
+.idea/
+.vscode/
+
+# 🧪 Testing / coverage
+.coverage
+htmlcov/
+
+# 🗄️ OS files
+.DS_Store
+Thumbs.db

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from .GenderChoice import Gender
+from .CommonChoice import Gender
 
 class AdminUser(AbstractUser):
     mobile = models.BigIntegerField(default=0)

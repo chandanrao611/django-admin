@@ -1,6 +1,3 @@
-import csv
-
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
@@ -8,12 +5,8 @@ from django.core import signing
 from django.core.paginator import Paginator
 from django.core.signing import BadSignature, SignatureExpired
 from django.db import transaction
-from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
-from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth.decorators import login_required
-
 from utils.EmailService import EmailService
 from utils.FileHandlerService import FileHandlerService
 from utils.HelperService import HelperService
@@ -24,10 +17,13 @@ from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, logout
 from django.contrib.auth.hashers import check_password
-from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 
 from .models import AdminUser
+from ..bookings.models import Booking
+from ..customers.models import Customer
+from ..hotels.models import Hotel
+from ..rooms.models import Room
 
 User = get_user_model()
 class LoginHotelAdminView(LoginView):
@@ -36,16 +32,19 @@ class LoginHotelAdminView(LoginView):
     and try to open login page, then it will redirect to the home page.
     """
     def dispatch(self, request, *args, **kwargs):
+        request.show_loader = False
         if request.user.is_authenticated:
             return redirect('/home')
         return super().dispatch(request, *args, **kwargs)
     # Loading login page
     def get(self, request):
         form = LoginForm()
+        request.show_loader = False
         return render(request, 'login.html', {'form': form})
 
     #Handling login form submission
     def post(self, request):
+        request.show_loader = True
         form = LoginForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
@@ -69,8 +68,10 @@ class LoginHotelAdminView(LoginView):
             request.session['superadmin_id'] = user.id
             request.session['is_superadmin'] = True
             login(request, user)
+            request.show_loader = False
             return redirect('/home')
         else:
+            request.show_loader = False
             return render(request, 'login.html', {'form': form})
 
 # Logout the user when click on the logout icon
@@ -167,15 +168,57 @@ class ActivateAccountView(View):
 
 class DashboardView(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'dashboard.html')
+        request.show_loader = False
+        total_hotels = Hotel.objects.count()
+        total_bookings = Booking.objects.count()
+        total_customers = Customer.objects.count()
+        total_rooms = Room.objects.count()
+        card_list = [
+            {
+                "title": "Total Hotels",
+                "amount": total_hotels,
+                "icon": "cube",
+                "icon_color": "text-danger",
+                "sub_title": "Hotels Registered",
+                "sub_icon": "alert-octagon",
+            },
+            {
+                "title": "Bookings",
+                "amount": total_bookings,
+                "icon": "receipt",
+                "icon_color": "text-warning",
+                "sub_title": "Room-wise bookings",
+                "sub_icon": "bookmark-outline",
+            },
+            {
+                "title": "Rooms",
+                "amount": total_rooms,
+                "icon": "poll",
+                "icon_color": "text-success",
+                "sub_title": "Weekly Sales",
+                "sub_icon": "calendar",
+            },
+            {
+                "title": "Customers",
+                "amount": total_customers,
+                "icon": "account-box-multiple",
+                "icon_color": " text-info",
+                "sub_title": "Total Registered Custom..",
+                "sub_icon": "reload",
+            }
+        ]
+        return render(request, 'dashboard.html', {"card_list": card_list})
 
 class AdminRegistrationView(View):
     def get(self, request):
+        request.show_loader = True
         form = AdminUserForm()
+        request.show_loader = False
         return render(request, 'admin-registration.html', {'form': form})
 
     def post(self, request):
         form = AdminUserForm(request.POST)
+        request.show_loader = True
         if form.is_valid():
             cd = form.cleaned_data
             AdminUser.objects.create(
@@ -194,7 +237,10 @@ class AdminRegistrationView(View):
                 status='pending',
                 is_staff= True
             )
+            MessageHandler.success(request, 'Added successfully.v')
+            request.show_loader = False
             return redirect('/admin-list')
+        request.show_loader = False
         return render(request, 'admin-registration.html', {'form': form})
 
 
@@ -206,6 +252,7 @@ class AdminProfileView(LoginRequiredMixin, View):
 
 class AdminListView(LoginRequiredMixin, View):
     def get(self, request):
+        request.show_loader = True
         staff_users = User.objects.all()
         # Create paginator: 10 employees per page
         limit = int(request.GET.get('limit', 10))
@@ -215,6 +262,7 @@ class AdminListView(LoginRequiredMixin, View):
         # Get the page object
         page_obj = paginator.get_page(page_number)
         fileForm = FileForm()
+        request.show_loader = False
         return render(request, 'admin-list.html', {'page_obj': page_obj, 'fileForm':fileForm})
 
     def post(self, request):

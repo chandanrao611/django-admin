@@ -1,17 +1,8 @@
 from django import forms
 from apps.hotel_admin.models import AdminUser
+from utils.SharedServices import common_attrs
 
-def common_attrs(name, placeholder, className=None, maxLength=None):
-    attrs = {
-        'name': name,
-        'placeholder': placeholder,
-    }
-    return {
-        'class': 'form-control ' + (className if className else ''),
-        'name': name,
-        'placeholder': placeholder,
-        'maxlength': maxLength if maxLength else '100'
-    }
+
 class AdminUserForm(forms.Form) :
     def __init__(self, *args, **kwargs):
         self.id = kwargs.pop('id', None)  # 👈 ALWAYS SET

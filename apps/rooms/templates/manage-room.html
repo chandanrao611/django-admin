@@ -1,0 +1,89 @@
+{% include 'base.html' %}
+<div class="container-scroller">
+    {% include 'header.html' %}
+    <div class="container-fluid page-body-wrapper">
+        {% include 'sidebar.html' %}
+        {% block content %}
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h3 class="page-title">
+                        <span class="page-title-icon bg-gradient-primary text-white me-2">
+                            <i class="mdi mdi-account-multiple"></i>
+                        </span> Add Room
+                    </h3>
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <span></span>Overview <i
+                                    class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" class="form-inline">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.hotel.label_tag}}
+                                    {{form.hotel}}
+                                    {{form.hotel.errors}}
+                                </div>
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.room_number.label_tag}}
+                                    {{form.room_number}}
+                                    {{form.room_number.errors}}
+                                </div>
+                                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                                    {{form.room_type.label_tag}}
+                                    {{form.room_type}}
+                                    {{form.room_type.errors}}
+                                </div>
+                                <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                    {{form.floor.label_tag}}
+                                    {{form.floor}}
+                                    {{form.floor.errors}}
+                                </div>
+                                <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                    {{form.capacity.label_tag}}
+                                    {{form.capacity}}
+                                    {{form.capacity.errors}}
+                                </div>
+                                <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                    {{form.max_capacity.label_tag}}
+                                    {{form.max_capacity}}
+                                    {{form.max_capacity.errors}}
+                                </div>
+                                <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                    {{form.price_per_night.label_tag}}
+                                    {{form.price_per_night}}
+                                    {{form.price_per_night.errors}}
+                                </div>
+                                <div class="form-group col-12">
+                                    {{form.description.label_tag}}
+                                    {{form.description}}
+                                    {{form.description.errors}}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</div>
+<script>
+$(document).on('change', '#id_room_type', function (e) {
+    var data = $(this).select2('data');
+    txt = data[0].text
+    txt = txt.split("(")
+    var [first, last] = txt[1].trim().replace(")", "").split("-");
+    $("#id_description").val(txt[0].trim());
+    $("#id_capacity").val(first);
+    $("#id_max_capacity").val(last);
+});
+</script>
